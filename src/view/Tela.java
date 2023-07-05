@@ -17,6 +17,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSlider;
@@ -28,6 +29,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.UIManager;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JDesktopPane;
 
 public class Tela {
 
@@ -321,6 +323,7 @@ public class Tela {
 		
 		JButton btnAjuda = new JButton("Ajuda");
 		
+		
 		btnAjuda.setBounds(535, 268, 83, 31);
 		frmGeradorDeMagias.getContentPane().add(btnAjuda);
 		
@@ -422,6 +425,18 @@ public class Tela {
 			
 			public void mouseExited(MouseEvent e) {
 				lblMeuGithub.setText("Meu Github");
+			}
+		});
+		
+		btnAjuda.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				JOptionPane.showMessageDialog(null, "Nível da Magia: Uma magia pode ter um nível entre 1 a 9\n"
+						+ "Elemento da magia: Determina qual vai ser o elemento da magia gerada\n"
+						+ "Classe da Magia: Determina a classe e o comportamento geral da magia gerada\n"
+						+ "Rank de Magia: Determina a qualidade e o poder geral da magia\n\n"
+						+ "Uma magia é gerada de forma semi-aleatória, com base nos parâmetros selecionados"
+						, "Ajuda", 1);
 			}
 		});
 		
