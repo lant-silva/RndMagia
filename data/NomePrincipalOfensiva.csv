@@ -1,9 +1,9 @@
-Punho;Ataque;Singular
-Estocada;Ataque;Singular
-Meteoro;Conjuração;Área
-Investida;Ataque;Singular
-Adaga Mágica;Conjurção;Singular
-Martelo;Conjuração;Singular
-Pilar;Conjuração;Área
-Raio;Conjuração;Singular
-Explosão;Conjuração;Área
+Punho;Ataque
+Estocada;Ataque
+Meteoro;Conjuração
+Investida;Ataque
+Adaga Mágica;Conjurção
+Martelo;Conjuração
+Pilar;Conjuração
+Raio;Conjuração
+Explosão;Conjuração
