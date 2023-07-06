@@ -5,4 +5,7 @@ public class Magia {
 	String elemento;
 	String classe;
 	String rank;
+	String nomeRank;
+	String alcance;
+	
 }
