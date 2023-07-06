@@ -23,18 +23,22 @@ import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.UIManager;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JDesktopPane;
+
+import control.GerarMagia;
+import model.Classes;
+import model.Elementos;
+import model.Nome;
+import model.Rank;
 
 public class Tela {
-
+	
+	private GerarMagia gerar = new GerarMagia();
 	private JFrame frmGeradorDeMagias;
-	private JTextField textField;
+	private JTextField txtNivel;
 
 	/**
 	 * Launch the application.
@@ -70,6 +74,13 @@ public class Tela {
 		frmGeradorDeMagias.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmGeradorDeMagias.getContentPane().setLayout(null);
 		
+		Nome nome = new Nome();
+		try {
+			nome.update();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		JPanel principal = new JPanel();
 		principal.setBorder(new LineBorder(new Color(0, 0, 0)));
 		principal.setBounds(12, 12, 397, 287);
@@ -80,11 +91,11 @@ public class Tela {
 		lblNivel.setBounds(12, 12, 93, 15);
 		principal.add(lblNivel);
 		
-		textField = new JTextField();
+		txtNivel = new JTextField();
 
-		textField.setBounds(103, 10, 48, 19);
-		principal.add(textField);
-		textField.setColumns(10);
+		txtNivel.setBounds(103, 10, 48, 19);
+		principal.add(txtNivel);
+		txtNivel.setColumns(10);
 		
 		JLabel lblElementosAleatrios = new JLabel("Elementos Aleatórios");
 		lblElementosAleatrios.setBounds(12, 44, 129, 15);
@@ -104,100 +115,65 @@ public class Tela {
 		principal.add(listaElementos);
 		listaElementos.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Fogo");
-		lblNewLabel.setBounds(12, 12, 55, 15);
-		listaElementos.add(lblNewLabel);
-		
-		JLabel lblNewLabel_1 = new JLabel("Gelo");
-		lblNewLabel_1.setBounds(12, 32, 55, 15);
-		listaElementos.add(lblNewLabel_1);
-		
-		JLabel lblNewLabel_2 = new JLabel("Elétrico");
-		lblNewLabel_2.setBounds(12, 49, 55, 15);
-		listaElementos.add(lblNewLabel_2);
-		
-		JRadioButton rdbtnFogo = new JRadioButton("");
-		rdbtnFogo.setBounds(59, 8, 21, 23);
+		JRadioButton rdbtnFogo = new JRadioButton("Fogo");
+		rdbtnFogo.setBounds(12, 8, 82, 23);
+		rdbtnFogo.setActionCommand("Fogo");
 		listaElementos.add(rdbtnFogo);
 		
-		JRadioButton rdbtnGelo = new JRadioButton("");
-		rdbtnGelo.setBounds(59, 28, 21, 23);
+		JRadioButton rdbtnGelo = new JRadioButton("Gelo");
+		rdbtnGelo.setBounds(12, 28, 82, 23);
+		rdbtnGelo.setActionCommand("Gelo");
 		listaElementos.add(rdbtnGelo);
 		
-		JRadioButton rdbtnEletrico = new JRadioButton("");
-		rdbtnEletrico.setBounds(59, 45, 21, 23);
+		JRadioButton rdbtnEletrico = new JRadioButton("Elétrico");
+		rdbtnEletrico.setBounds(12, 45, 82, 23);
+		rdbtnEletrico.setActionCommand("Elétrico");
 		listaElementos.add(rdbtnEletrico);
 		
-		JLabel lblNatureza = new JLabel("Natureza");
-		lblNatureza.setBounds(94, 12, 55, 15);
-		listaElementos.add(lblNatureza);
-		
-		JLabel lblMorte = new JLabel("Morte");
-		lblMorte.setBounds(94, 32, 55, 15);
-		listaElementos.add(lblMorte);
-		
-		JLabel lblDivino = new JLabel("Etéreo");
-		lblDivino.setBounds(94, 49, 55, 15);
-		listaElementos.add(lblDivino);
-		
-		JRadioButton rdbtnNatureza = new JRadioButton("");
-		rdbtnNatureza.setBounds(152, 8, 21, 23);
+		JRadioButton rdbtnNatureza = new JRadioButton("Natureza");
+		rdbtnNatureza.setBounds(91, 8, 82, 23);
+		rdbtnNatureza.setActionCommand("Natureza");
 		listaElementos.add(rdbtnNatureza);
 		
-		JRadioButton rdbtnMorte = new JRadioButton("");
-		rdbtnMorte.setBounds(152, 28, 21, 23);
+		JRadioButton rdbtnMorte = new JRadioButton("Morte");
+		rdbtnMorte.setBounds(91, 28, 82, 23);
+		rdbtnMorte.setActionCommand("Morte");
 		listaElementos.add(rdbtnMorte);
 		
-		JRadioButton rdbtnEtereo = new JRadioButton("");
-		rdbtnEtereo.setBounds(152, 45, 21, 23);
+		JRadioButton rdbtnEtereo = new JRadioButton("Etéreo");
+		rdbtnEtereo.setBounds(91, 45, 82, 23);
+		rdbtnEtereo.setActionCommand("Etéreo");
 		listaElementos.add(rdbtnEtereo);
 		
-		JLabel lblAgua = new JLabel("Água");
-		lblAgua.setBounds(187, 12, 55, 15);
-		listaElementos.add(lblAgua);
-		
-		JLabel lblVento = new JLabel("Vento");
-		lblVento.setBounds(187, 32, 55, 15);
-		listaElementos.add(lblVento);
-		
-		JLabel lblImaginario = new JLabel("Imaginário");
-		lblImaginario.setBounds(187, 49, 61, 15);
-		listaElementos.add(lblImaginario);
-		
-		JRadioButton rdbtnAgua = new JRadioButton("");
-		rdbtnAgua.setBounds(251, 8, 21, 23);
+		JRadioButton rdbtnAgua = new JRadioButton("Água");
+		rdbtnAgua.setBounds(177, 8, 95, 23);
+		rdbtnAgua.setActionCommand("Água");
 		listaElementos.add(rdbtnAgua);
 		
-		JRadioButton rdbtnVento = new JRadioButton("");
-		rdbtnVento.setBounds(251, 28, 21, 23);
+		JRadioButton rdbtnVento = new JRadioButton("Vento");
+		rdbtnVento.setBounds(177, 28, 95, 23);
+		rdbtnVento.setActionCommand("Vento");
 		listaElementos.add(rdbtnVento);
 		
-		JRadioButton rdbtnImaginario = new JRadioButton("");
-		rdbtnImaginario.setBounds(251, 45, 21, 23);
+		JRadioButton rdbtnImaginario = new JRadioButton("Imaginário");
+		rdbtnImaginario.setBounds(177, 45, 95, 23);
+		rdbtnImaginario.setActionCommand("Imaginário");
 		listaElementos.add(rdbtnImaginario);
 		
-		JLabel lblFada = new JLabel("Fada");
-		lblFada.setBounds(286, 12, 55, 15);
-		listaElementos.add(lblFada);
-		
-		JLabel lblPsiquico = new JLabel("Psíquico");
-		lblPsiquico.setBounds(286, 32, 55, 15);
-		listaElementos.add(lblPsiquico);
-		
-		JLabel lblQuantico = new JLabel("Quântico");
-		lblQuantico.setBounds(286, 49, 55, 15);
-		listaElementos.add(lblQuantico);
-		
-		JRadioButton rdbtnFada = new JRadioButton("");
-		rdbtnFada.setBounds(341, 8, 21, 23);
+		JRadioButton rdbtnFada = new JRadioButton("Fada");
+		rdbtnFada.setBounds(276, 8, 86, 23);
+		rdbtnFada.setActionCommand("Fada");
 		listaElementos.add(rdbtnFada);
 		
-		JRadioButton rdbtnPsiquico = new JRadioButton("");
-		rdbtnPsiquico.setBounds(341, 28, 21, 23);
+		JRadioButton rdbtnPsiquico = new JRadioButton("Psíquico");
+		rdbtnPsiquico.setBounds(276, 28, 86, 23);
+		rdbtnPsiquico.setActionCommand("Psíquico");
 		listaElementos.add(rdbtnPsiquico);
 		
-		JRadioButton rdbtnQuantico = new JRadioButton("");
-		rdbtnQuantico.setBounds(341, 45, 21, 23);
+		JRadioButton rdbtnQuantico = new JRadioButton("Quântico");
+		rdbtnQuantico.setToolTipText("Uma coisa");
+		rdbtnQuantico.setActionCommand("Quântico");
+		rdbtnQuantico.setBounds(276, 45, 86, 23);
 		listaElementos.add(rdbtnQuantico);
 		
 		ButtonGroup grupoElementos = new ButtonGroup();
@@ -231,28 +207,19 @@ public class Tela {
 		principal.add(listaClasses);
 		listaClasses.setLayout(null);
 		
-		JLabel lblOfensiva = new JLabel("Ofensiva");
-		lblOfensiva.setBounds(12, 12, 55, 15);
-		listaClasses.add(lblOfensiva);
-		
-		JLabel lblDefensiva = new JLabel("Defensiva");
-		lblDefensiva.setBounds(135, 12, 58, 15);
-		listaClasses.add(lblDefensiva);
-		
-		JLabel lblSuporte = new JLabel("Suporte");
-		lblSuporte.setBounds(284, 12, 55, 15);
-		listaClasses.add(lblSuporte);
-		
-		JRadioButton rdbtnOfensiva = new JRadioButton("");
-		rdbtnOfensiva.setBounds(64, 8, 21, 23);
+		JRadioButton rdbtnOfensiva = new JRadioButton("Ofensiva");
+		rdbtnOfensiva.setActionCommand("Ofensiva");
+		rdbtnOfensiva.setBounds(12, 8, 87, 23);
 		listaClasses.add(rdbtnOfensiva);
 		
-		JRadioButton rdbtnDefensiva = new JRadioButton("");
-		rdbtnDefensiva.setBounds(194, 8, 21, 23);
+		JRadioButton rdbtnDefensiva = new JRadioButton("Defensiva");
+		rdbtnDefensiva.setActionCommand("Defensiva");
+		rdbtnDefensiva.setBounds(145, 8, 87, 23);
 		listaClasses.add(rdbtnDefensiva);
 		
-		JRadioButton rdbtnSuporte = new JRadioButton("");
-		rdbtnSuporte.setBounds(331, 8, 21, 23);
+		JRadioButton rdbtnSuporte = new JRadioButton("Suporte");
+		rdbtnSuporte.setActionCommand("Suporte");
+		rdbtnSuporte.setBounds(284, 8, 81, 23);
 		listaClasses.add(rdbtnSuporte);
 		
 		ButtonGroup grupoClasses = new ButtonGroup();
@@ -283,7 +250,7 @@ public class Tela {
 		principal.add(lblB);
 		
 		JLabel lblA = new JLabel("A");
-		lblA.setBounds(197, 254, 55, 15);
+		lblA.setBounds(199, 254, 53, 15);
 		principal.add(lblA);
 		
 		JLabel lblS = new JLabel("S");
@@ -295,6 +262,7 @@ public class Tela {
 		principal.add(lblSs);
 		
 		JButton btnGerar = new JButton("Gerar Magia");
+		
 		btnGerar.setBounds(419, 268, 104, 31);
 		frmGeradorDeMagias.getContentPane().add(btnGerar);
 		
@@ -378,25 +346,25 @@ public class Tela {
 			}
 		});
 		
-		textField.addKeyListener(new KeyAdapter() {
+		txtNivel.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				char c = e.getKeyChar();
 				if(!Character.isLetter(c)||Character.isWhitespace(c)||Character.isISOControl(c)) {
-					textField.setEditable(true);
+					txtNivel.setEditable(true);
 				}else {
-					textField.setEditable(false);
+					txtNivel.setEditable(false);
 					return;
 				}
-				String num = textField.getText();
+				String num = txtNivel.getText();
 				int keyCode = e.getKeyCode();
 				
 				
-				if(textField.getText().length()>=1) {
-					textField.setEditable(false);
+				if(txtNivel.getText().length()>=1) {
+					txtNivel.setEditable(false);
 				}
 				if(e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-					textField.setEditable(true);
+					txtNivel.setEditable(true);
 				}
 			}
 		});
@@ -425,6 +393,32 @@ public class Tela {
 			
 			public void mouseExited(MouseEvent e) {
 				lblMeuGithub.setText("Meu Github");
+			}
+		});
+		
+		btnGerar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String aux = txtNivel.getText();
+				int nivel = Integer.parseInt(aux);
+				String elemento;
+				String classe;
+				if(rdbtnElementosAleatorios.isSelected()){
+					int random = (int) (Math.random()*12);
+					elemento = Elementos.elemento[random];
+				}else {
+					elemento = grupoElementos.getSelection().getActionCommand();
+				}
+				if(rdbtnClassesAleatorias.isSelected()) {
+					int random = (int) (Math.random()*3);
+					classe = Classes.classe[random];
+				}else {
+					classe = grupoClasses.getSelection().getActionCommand();
+				}
+				String rank = Rank.rank[slider.getValue()-1];
+				
+				gerar.getParameters(nivel, elemento, classe, rank);
+				
 			}
 		});
 		
