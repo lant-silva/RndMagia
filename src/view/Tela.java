@@ -642,15 +642,17 @@ public class Tela {
 				}
 				
 				try {				
-					String tipo = gerar.gerarNome(classe);
-					String nomeElemento = gerar.gerarNomeElemento(elemento);
-					String nomeRank = gerar.gerarRank(rank);
-					String duracao = gerar.gerarDuracao(nivel, rank);
-					String efeito = gerar.gerarEfeito(classe);
-					String descEfeito = gerar.gerarEfeito(nivel, rank, efeito);
-					String alcance = gerar.gerarAlcance();
+//					String tipo = gerar.gerarNome(classe);
+//					String nomeElemento = gerar.gerarNomeElemento(elemento);
+//					String nomeRank = gerar.gerarRank(rank);
+//					String duracao = gerar.gerarDuracao(nivel, rank);
+//					String efeito = gerar.gerarEfeito(classe);
+//					String descEfeito = gerar.gerarEfeito(nivel, rank, efeito);
+//					String alcance = gerar.gerarAlcance();
+//					
+//					magiaGerada = new Magia(tipo, nomeElemento, nivel, elemento, classe, nomeRank, rank, alcance, duracao, descEfeito, efeito);
 					
-					magiaGerada = new Magia(tipo, nomeElemento, nivel, elemento, classe, nomeRank, rank, alcance, duracao, descEfeito, efeito);
+					magiaGerada = gerar.getParameters(nivel, elemento, classe, rank);
 					
 					lblNomeMagia.setText(magiaGerada.getNome());
 					lblRankMagia.setText(magiaGerada.getNomeRank());
