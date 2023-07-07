@@ -234,6 +234,7 @@ public class GerarMagia {
 			if(formula<1) {
 				formula = 1;
 			}
+			principal = Integer.toString(formula);
 			dados = Integer.toString((int)(Math.random()*nivel)+2);
 			int auxRestauracao = Integer.parseInt(dados);
 			if(auxRestauracao>8) {
