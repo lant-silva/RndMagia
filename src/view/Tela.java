@@ -46,7 +46,7 @@ public class Tela {
 	private GerarMagia gerar = new GerarMagia();
 	private JFrame frmGeradorDeMagias;
 	private JTextField txtNivel;
-	private Magia magiaGerada;
+	
 	private JTextField txtRankFundo;
 
 	/**
@@ -68,6 +68,7 @@ public class Tela {
 	/**
 	 * Create the application.
 	 */
+	Magia magiaGerada = new Magia("","", 0,"","","","", "", "", "", "");
 	public Tela() {
 		initialize();
 	}
@@ -75,7 +76,7 @@ public class Tela {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	public void initialize() {
 		frmGeradorDeMagias = new JFrame();
 		frmGeradorDeMagias.setResizable(false);
 		frmGeradorDeMagias.setTitle("RndMagia");
@@ -640,8 +641,16 @@ public class Tela {
 					rank = Rank.rank[slider.getValue()-1];					
 				}
 				
-				try {
-					magiaGerada = gerar.getParameters(nivel, elemento, classe, rank);
+				try {				
+					String tipo = gerar.gerarNome(classe);
+					String nomeElemento = gerar.gerarNomeElemento(elemento);
+					String nomeRank = gerar.gerarRank(rank);
+					String duracao = gerar.gerarDuracao(nivel, rank);
+					String efeito = gerar.gerarEfeito(classe);
+					String descEfeito = gerar.gerarEfeito(nivel, rank, efeito);
+					String alcance = gerar.gerarAlcance();
+					
+					magiaGerada = new Magia(tipo, nomeElemento, nivel, elemento, classe, nomeRank, rank, alcance, duracao, descEfeito, efeito);
 					
 					lblNomeMagia.setText(magiaGerada.getNome());
 					lblRankMagia.setText(magiaGerada.getNomeRank());

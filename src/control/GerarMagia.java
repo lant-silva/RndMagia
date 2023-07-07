@@ -32,7 +32,7 @@ public class GerarMagia {
 			e.printStackTrace();
 		}
 		
-		Magia magia = new Magia(tipo, nomeElemento, nivel, elementos, classe, this.rank, rank, alcance, duracao, descEfeito, efeito);
+		Magia magia = new Magia(this.tipo, this.nomeElemento, nivel, elementos, classe, this.rank, rank, alcance, duracao, descEfeito, efeito);
 		System.out.println(tipo+" "+nomeElemento+" | "+efeito+" | "+alcance+" | "+this.rank+ " | "+duracao+" | "+descEfeito);
 		return magia;
 	}
@@ -61,6 +61,23 @@ public class GerarMagia {
 		}
 		
 		return nome;
+	}
+	
+	public String gerarEfeito(String classe) throws Exception{
+		int tamanho;
+		int rand;
+		switch(classe) {
+		case "Ofensiva": tamanho = Nome.efeitoPrincipalOfensiva.size();
+			rand = (int) (Math.random()*tamanho);
+			return Nome.efeitoPrincipalOfensiva.get(rand);
+		case "Defensiva": tamanho = Nome.efeitoPrincipalDefensiva.size();
+			rand = (int) (Math.random()*tamanho);
+			return Nome.efeitoPrincipalDefensiva.get(rand);
+		case "Suporte": tamanho = Nome.efeitoPrincipalSuporte.size();
+			rand = (int) (Math.random()*tamanho);
+			return Nome.efeitoPrincipalSuporte.get(rand);
+		}
+		return "";
 	}
 	
 	public String gerarNomeElemento(String elemento) throws Exception{
