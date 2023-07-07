@@ -9,20 +9,26 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSlider;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
@@ -31,6 +37,7 @@ import javax.swing.event.ChangeListener;
 import control.GerarMagia;
 import model.Classes;
 import model.Elementos;
+import model.Magia;
 import model.Nome;
 import model.Rank;
 
@@ -39,6 +46,8 @@ public class Tela {
 	private GerarMagia gerar = new GerarMagia();
 	private JFrame frmGeradorDeMagias;
 	private JTextField txtNivel;
+	private Magia magiaGerada;
+	private JTextField txtRankFundo;
 
 	/**
 	 * Launch the application.
@@ -69,14 +78,17 @@ public class Tela {
 	private void initialize() {
 		frmGeradorDeMagias = new JFrame();
 		frmGeradorDeMagias.setResizable(false);
-		frmGeradorDeMagias.setTitle("Gerador de Magias");
-		frmGeradorDeMagias.setBounds(100, 100, 634, 352);
+		frmGeradorDeMagias.setTitle("RndMagia");
+		frmGeradorDeMagias.setBounds(100, 100, 730, 700);
 		frmGeradorDeMagias.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmGeradorDeMagias.getContentPane().setLayout(null);
 		
 		Nome nome = new Nome();
+		Rank updateRank = new Rank();
+		
 		try {
 			nome.update();
+			updateRank.updateRanks();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -102,6 +114,7 @@ public class Tela {
 		principal.add(lblElementosAleatrios);
 		
 		JRadioButton rdbtnElementosAleatorios = new JRadioButton("");
+		rdbtnElementosAleatorios.setToolTipText("Faz a escolha aleatoria de um dos elementos disponíveis");
 
 		
 
@@ -116,62 +129,73 @@ public class Tela {
 		listaElementos.setLayout(null);
 		
 		JRadioButton rdbtnFogo = new JRadioButton("Fogo");
+		rdbtnFogo.setToolTipText("Magias de fogo possuem um efeito flamejante que incinera seus alvos");
 		rdbtnFogo.setBounds(12, 8, 82, 23);
 		rdbtnFogo.setActionCommand("Fogo");
 		listaElementos.add(rdbtnFogo);
 		
 		JRadioButton rdbtnGelo = new JRadioButton("Gelo");
+		rdbtnGelo.setToolTipText("Magias de gelo possuem um fator congelante, capaz de interromper seus alvos");
 		rdbtnGelo.setBounds(12, 28, 82, 23);
 		rdbtnGelo.setActionCommand("Gelo");
 		listaElementos.add(rdbtnGelo);
 		
 		JRadioButton rdbtnEletrico = new JRadioButton("Elétrico");
+		rdbtnEletrico.setToolTipText("Magias elétricas tem um foco eletrizante, capaz de atingir vários alvos, e imobilizá-los");
 		rdbtnEletrico.setBounds(12, 45, 82, 23);
 		rdbtnEletrico.setActionCommand("Elétrico");
 		listaElementos.add(rdbtnEletrico);
 		
 		JRadioButton rdbtnNatureza = new JRadioButton("Natureza");
+		rdbtnNatureza.setToolTipText("Magias da natureza tem um aspecto natural, vindo da terra e das criaturas naturais");
 		rdbtnNatureza.setBounds(91, 8, 82, 23);
 		rdbtnNatureza.setActionCommand("Natureza");
 		listaElementos.add(rdbtnNatureza);
 		
 		JRadioButton rdbtnMorte = new JRadioButton("Morte");
+		rdbtnMorte.setToolTipText("Magias da morte possuem um toque mortal, capaz de nulificar alvos com o poder da morte");
 		rdbtnMorte.setBounds(91, 28, 82, 23);
 		rdbtnMorte.setActionCommand("Morte");
 		listaElementos.add(rdbtnMorte);
 		
 		JRadioButton rdbtnEtereo = new JRadioButton("Etéreo");
+		rdbtnEtereo.setToolTipText("Magias etéreas possuem um ar de divindade e um ar fantasmagórico, algo do além");
 		rdbtnEtereo.setBounds(91, 45, 82, 23);
 		rdbtnEtereo.setActionCommand("Etéreo");
 		listaElementos.add(rdbtnEtereo);
 		
 		JRadioButton rdbtnAgua = new JRadioButton("Água");
+		rdbtnAgua.setToolTipText("Magias aquáticas possuem um toque relaxante, molhado e refrescante, mas que também podem causar estragos a seus alvos");
 		rdbtnAgua.setBounds(177, 8, 95, 23);
 		rdbtnAgua.setActionCommand("Água");
 		listaElementos.add(rdbtnAgua);
 		
 		JRadioButton rdbtnVento = new JRadioButton("Vento");
+		rdbtnVento.setToolTipText("Magias de vento são ágeis, velozes, possuem uma brisa intrigante que podem causar estragos a seus alvos");
 		rdbtnVento.setBounds(177, 28, 95, 23);
 		rdbtnVento.setActionCommand("Vento");
 		listaElementos.add(rdbtnVento);
 		
 		JRadioButton rdbtnImaginario = new JRadioButton("Imaginário");
+		rdbtnImaginario.setToolTipText("Magias imaginárias são especiais, possuem o poder de criar e destruir de formas inimagináveis");
 		rdbtnImaginario.setBounds(177, 45, 95, 23);
 		rdbtnImaginario.setActionCommand("Imaginário");
 		listaElementos.add(rdbtnImaginario);
 		
-		JRadioButton rdbtnFada = new JRadioButton("Fada");
-		rdbtnFada.setBounds(276, 8, 86, 23);
-		rdbtnFada.setActionCommand("Fada");
-		listaElementos.add(rdbtnFada);
+		JRadioButton rdbtnFeerico = new JRadioButton("Feérico");
+		rdbtnFeerico.setToolTipText("Magias feéricas tem um toque de fada, de espiritos carismáticos que podem enganar e enfeitiçar seus alvos");
+		rdbtnFeerico.setBounds(276, 8, 86, 23);
+		rdbtnFeerico.setActionCommand("Feérico");
+		listaElementos.add(rdbtnFeerico);
 		
 		JRadioButton rdbtnPsiquico = new JRadioButton("Psíquico");
+		rdbtnPsiquico.setToolTipText("Magias psíquicas usam o poder da mente para afetar seus alvos");
 		rdbtnPsiquico.setBounds(276, 28, 86, 23);
 		rdbtnPsiquico.setActionCommand("Psíquico");
 		listaElementos.add(rdbtnPsiquico);
 		
 		JRadioButton rdbtnQuantico = new JRadioButton("Quântico");
-		rdbtnQuantico.setToolTipText("Uma coisa");
+		rdbtnQuantico.setToolTipText("Magias quânticas são especiais, possuem o poder absoluto, podem causar estragos extremos a seus alvos");
 		rdbtnQuantico.setActionCommand("Quântico");
 		rdbtnQuantico.setBounds(276, 45, 86, 23);
 		listaElementos.add(rdbtnQuantico);
@@ -180,7 +204,7 @@ public class Tela {
 		
 		grupoElementos.add(rdbtnQuantico);
 		grupoElementos.add(rdbtnPsiquico);
-		grupoElementos.add(rdbtnFada);
+		grupoElementos.add(rdbtnFeerico);
 		grupoElementos.add(rdbtnImaginario);
 		grupoElementos.add(rdbtnVento);
 		grupoElementos.add(rdbtnAgua);
@@ -208,16 +232,19 @@ public class Tela {
 		listaClasses.setLayout(null);
 		
 		JRadioButton rdbtnOfensiva = new JRadioButton("Ofensiva");
+		rdbtnOfensiva.setToolTipText("Magias de classe ofensiva tendem a ter um foco em atacar alvos e conjurar efeitos de ataque");
 		rdbtnOfensiva.setActionCommand("Ofensiva");
 		rdbtnOfensiva.setBounds(12, 8, 87, 23);
 		listaClasses.add(rdbtnOfensiva);
 		
 		JRadioButton rdbtnDefensiva = new JRadioButton("Defensiva");
+		rdbtnDefensiva.setToolTipText("Magias de classe defensiva tem como foco a defesa e a proteção dos alvos afetados");
 		rdbtnDefensiva.setActionCommand("Defensiva");
 		rdbtnDefensiva.setBounds(145, 8, 87, 23);
 		listaClasses.add(rdbtnDefensiva);
 		
 		JRadioButton rdbtnSuporte = new JRadioButton("Suporte");
+		rdbtnSuporte.setToolTipText("Magias de suporte tem como foco ajudar os aliados no campo de batalha");
 		rdbtnSuporte.setActionCommand("Suporte");
 		rdbtnSuporte.setBounds(284, 8, 81, 23);
 		listaClasses.add(rdbtnSuporte);
@@ -234,7 +261,7 @@ public class Tela {
 		
 		JSlider slider = new JSlider();
 		slider.setValue(3);
-		slider.setToolTipText("a");
+		slider.setToolTipText("Determina o quâo forte vai ser a sua magia");
 		slider.setSnapToTicks(true);
 		slider.setMaximum(5);
 		slider.setMinimum(1);
@@ -261,39 +288,197 @@ public class Tela {
 		lblSs.setBounds(284, 254, 61, 15);
 		principal.add(lblSs);
 		
+		JRadioButton rdbtnRankAleatorio = new JRadioButton("Aleatório");
+		
+		rdbtnRankAleatorio.setBounds(298, 231, 91, 23);
+		principal.add(rdbtnRankAleatorio);
+		
+		JRadioButton rdbtnNivelAleatorio = new JRadioButton("Aleatório");
+		
+		rdbtnNivelAleatorio.setBounds(159, 8, 76, 23);
+		principal.add(rdbtnNivelAleatorio);
+		
 		JButton btnGerar = new JButton("Gerar Magia");
+		btnGerar.setToolTipText("Clique aqui para gerar a magia");
 		
 		btnGerar.setBounds(419, 268, 104, 31);
 		frmGeradorDeMagias.getContentPane().add(btnGerar);
 		
 		JPanel sobre = new JPanel();
 		sobre.setBorder(new LineBorder(new Color(0, 0, 0)));
-		sobre.setBounds(421, 12, 199, 245);
+		sobre.setBounds(421, 12, 293, 245);
 		frmGeradorDeMagias.getContentPane().add(sobre);
 		sobre.setLayout(null);
 		
-		JLabel lblNewLabel_3 = new JLabel("Gerador Automático de Magias");
-		lblNewLabel_3.setBounds(12, 5, 191, 15);
+		JLabel lblNewLabel_3 = new JLabel("RndMagia - Gerador Automático de Magias");
+		lblNewLabel_3.setBounds(12, 5, 269, 15);
 		sobre.add(lblNewLabel_3);
 		
 		JTextPane txtpnSobre = new JTextPane();
 		txtpnSobre.setBackground(UIManager.getColor("Panel.background"));
 		txtpnSobre.setFont(new Font("Dialog", Font.BOLD, 12));
-		txtpnSobre.setText("Um pequeno gerador de magias feito no Java, com o intuito de acelerar o processo criativo de criar magias para personagens de RPG                                 Espero que esse pequeno programa ajude!");
-		txtpnSobre.setBounds(12, 23, 175, 179);
+		txtpnSobre.setText("Um pequeno gerador de magias feito no Java, com o intuito de acelerar o processo criativo de criar magias para personagens de RPG                                                                      Espero que esse pequeno programa ajude!");
+		txtpnSobre.setBounds(12, 23, 269, 179);
 		sobre.add(txtpnSobre);
 		
 		JLabel lblMeuGithub = new JLabel("Meu GitHub");
 		lblMeuGithub.setForeground(Color.BLUE.darker());
 		
-		lblMeuGithub.setBounds(65, 218, 73, 15);
+		lblMeuGithub.setBounds(22, 218, 73, 15);
 		sobre.add(lblMeuGithub);
 		
 		JButton btnAjuda = new JButton("Ajuda");
+		btnAjuda.setBounds(198, 202, 83, 31);
+		sobre.add(btnAjuda);
 		
+		JPanel panel = new JPanel();
+		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel.setBounds(12, 311, 560, 339);
+		frmGeradorDeMagias.getContentPane().add(panel);
+		panel.setLayout(null);
 		
-		btnAjuda.setBounds(535, 268, 83, 31);
-		frmGeradorDeMagias.getContentPane().add(btnAjuda);
+		JLabel lblRankMagia = new JLabel("");
+		lblRankMagia.setHorizontalAlignment(SwingConstants.CENTER);
+		lblRankMagia.setFont(new Font("Dialog", Font.BOLD, 26));
+		lblRankMagia.setBounds(57, 49, 44, 43);
+		panel.add(lblRankMagia);
+		
+		JLabel lblNome = new JLabel("Nome:");
+		lblNome.setBounds(12, 22, 55, 15);
+		panel.add(lblNome);
+		
+		JLabel lblNomeMagia = new JLabel("");
+		lblNomeMagia.setFont(new Font("Dialog", Font.BOLD, 16));
+		lblNomeMagia.setBounds(57, 12, 523, 36);
+		panel.add(lblNomeMagia);
+		
+		JLabel lblRank = new JLabel("Rank:");
+		lblRank.setBounds(12, 63, 55, 15);
+		panel.add(lblRank);
+		
+		txtRankFundo = new JTextField();
+		txtRankFundo.setEditable(false);
+		txtRankFundo.setEnabled(false);
+		txtRankFundo.setBounds(57, 49, 44, 44);
+		panel.add(txtRankFundo);
+		txtRankFundo.setColumns(10);
+		
+		JLabel lblClasse = new JLabel("Classe:");
+		lblClasse.setBounds(115, 63, 55, 15);
+		panel.add(lblClasse);
+		
+		JLabel lblClasseMagia = new JLabel("");
+		lblClasseMagia.setBounds(163, 63, 108, 15);
+		panel.add(lblClasseMagia);
+		
+		JLabel lblElemento = new JLabel("Elemento:");
+		lblElemento.setBounds(283, 63, 64, 15);
+		panel.add(lblElemento);
+		
+		JLabel lblElementoMagia = new JLabel("");
+		lblElementoMagia.setBounds(345, 63, 101, 15);
+		panel.add(lblElementoMagia);
+		
+		JLabel lblRankDescricao = new JLabel("");
+		lblRankDescricao.setHorizontalAlignment(SwingConstants.CENTER);
+		lblRankDescricao.setBounds(22, 93, 108, 15);
+		panel.add(lblRankDescricao);
+		
+		JLabel lblEfeito = new JLabel("Efeito:");
+		lblEfeito.setBounds(12, 120, 55, 15);
+		panel.add(lblEfeito);
+		
+		JLabel lblEfeitoMagia = new JLabel("");
+		lblEfeitoMagia.setBounds(57, 120, 113, 15);
+		panel.add(lblEfeitoMagia);
+		
+		JLabel lblAlcance = new JLabel("Alcance:");
+		lblAlcance.setBounds(182, 120, 55, 15);
+		panel.add(lblAlcance);
+		
+		JLabel lblAlcanceMagia = new JLabel("");
+		lblAlcanceMagia.setBounds(238, 120, 108, 15);
+		panel.add(lblAlcanceMagia);
+		
+		JLabel lblDurao = new JLabel("Duração:");
+		lblDurao.setBounds(345, 120, 55, 15);
+		panel.add(lblDurao);
+		
+		JLabel lblDuracaoMagia = new JLabel("");
+		lblDuracaoMagia.setBounds(401, 120, 120, 15);
+		panel.add(lblDuracaoMagia);
+		
+		JLabel lblNvel = new JLabel("Nível:");
+		lblNvel.setBounds(445, 63, 32, 15);
+		panel.add(lblNvel);
+		
+		JLabel lblNivelMagia = new JLabel("");
+		lblNivelMagia.setBounds(481, 63, 64, 15);
+		panel.add(lblNivelMagia);
+		
+		JLabel lblDescrio = new JLabel("Descrição:");
+		lblDescrio.setBounds(12, 147, 64, 15);
+		panel.add(lblDescrio);
+		
+		JTextArea txtrDescricaoMagia = new JTextArea();
+		txtrDescricaoMagia.setFont(new Font("Dialog", Font.BOLD, 12));
+		txtrDescricaoMagia.setBounds(12, 164, 536, 124);
+		panel.add(txtrDescricaoMagia);
+		
+		JButton btnSalvarMagia = new JButton("Salvar Magia");
+		btnSalvarMagia.setToolTipText("Clique aqui para salvar a magia gerada ");
+		
+		btnSalvarMagia.setBounds(212, 300, 135, 27);
+		panel.add(btnSalvarMagia);
+		
+		JButton btnNovoNomeElemento = new JButton("Novo Elemento");
+		
+		btnNovoNomeElemento.setToolTipText("Gera um novo nome para o elemento escolhido");
+		btnNovoNomeElemento.setBounds(584, 369, 130, 31);
+		frmGeradorDeMagias.getContentPane().add(btnNovoNomeElemento);
+		
+		JButton btnNewButton = new JButton("Novo Rank");
+		
+		btnNewButton.setToolTipText("Gera uma nova descrição de rank para o rank escolhido");
+		btnNewButton.setBounds(584, 412, 130, 31);
+		frmGeradorDeMagias.getContentPane().add(btnNewButton);
+		
+		JButton btnNovoAlcance = new JButton("Novo Alcance");
+		
+		btnNovoAlcance.setToolTipText("Gera um novo alcance");
+		btnNovoAlcance.setBounds(584, 455, 130, 31);
+		frmGeradorDeMagias.getContentPane().add(btnNovoAlcance);
+		
+		JButton btnNovaDuracao = new JButton("Nova Duração");
+		
+		btnNovaDuracao.setToolTipText("Gera uma nova duração para a sua magia, com base no nível e rank");
+		btnNovaDuracao.setBounds(584, 498, 130, 31);
+		frmGeradorDeMagias.getContentPane().add(btnNovaDuracao);
+		
+		JButton btnNovoEfeito = new JButton("Novo Efeito");
+		
+		btnNovoEfeito.setBounds(584, 541, 130, 31);
+		frmGeradorDeMagias.getContentPane().add(btnNovoEfeito);
+		
+		JButton btnNovoTipo = new JButton("Novo Tipo");
+		
+		btnNovoTipo.setBounds(584, 326, 130, 31);
+		frmGeradorDeMagias.getContentPane().add(btnNovoTipo);
+		
+		btnAjuda.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				JOptionPane.showMessageDialog(null, "Nível da Magia: Uma magia pode ter um nível entre 1 a 9\n"
+						+ "Elemento da magia: Determina qual vai ser o elemento da magia gerada\n"
+						+ "Classe da Magia: Determina a classe e o comportamento geral da magia gerada\n"
+						+ "Rank de Magia: Determina a qualidade e o poder geral da magia\n\n"
+						+ "Uma magia é gerada de forma semi-aleatória, com base nos parâmetros selecionados\n"
+						+ "Para editar (parte) da magia gerada, pode utilizar os botões abaixo\n"
+						+ "Caso queira alterar os parametros para a geração da magia, edite o arquivo Parametros.ini na pasta \"data\"\n"
+						+ "Caso queira adicionar uma descrição a sua magia, digite no campo de descrição ao lado"
+						, "Ajuda", 1);
+			}
+		});
 		
 		rdbtnElementosAleatorios.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
@@ -307,7 +492,7 @@ public class Tela {
 					rdbtnAgua.setEnabled(false);
 					rdbtnVento.setEnabled(false);
 					rdbtnImaginario.setEnabled(false);
-					rdbtnFada.setEnabled(false);
+					rdbtnFeerico.setEnabled(false);
 					rdbtnPsiquico.setEnabled(false);
 					rdbtnQuantico.setEnabled(false);
 					
@@ -323,7 +508,7 @@ public class Tela {
 					rdbtnAgua.setEnabled(true);
 					rdbtnVento.setEnabled(true);
 					rdbtnImaginario.setEnabled(true);
-					rdbtnFada.setEnabled(true);
+					rdbtnFeerico.setEnabled(true);
 					rdbtnPsiquico.setEnabled(true);
 					rdbtnQuantico.setEnabled(true);
 				}
@@ -342,6 +527,27 @@ public class Tela {
 					rdbtnOfensiva.setEnabled(true);
 					rdbtnDefensiva.setEnabled(true);
 					rdbtnSuporte.setEnabled(true);
+				}
+			}
+		});
+		
+		rdbtnNivelAleatorio.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				if(rdbtnNivelAleatorio.isSelected()) {
+					txtNivel.setText("");
+					txtNivel.setEnabled(false);
+				}else {
+					txtNivel.setEnabled(true);
+				}
+			}
+		});
+		
+		rdbtnRankAleatorio.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				if(rdbtnRankAleatorio.isSelected()) {
+					slider.setEnabled(false);
+				}else {
+					slider.setEnabled(true);
 				}
 			}
 		});
@@ -399,14 +605,25 @@ public class Tela {
 		btnGerar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				String aux = txtNivel.getText();
-				int nivel = Integer.parseInt(aux);
-				String elemento;
+				
+				
+				String elemento="";
 				String classe;
+				int nivel=0;
+				String rank="";
+			
+				if(rdbtnNivelAleatorio.isSelected()) {
+					int random = (int) (Math.random()*9)+1;
+					nivel = random;
+				}else {
+					String aux = txtNivel.getText();
+					nivel = Integer.parseInt(aux);					
+				}
+				
 				if(rdbtnElementosAleatorios.isSelected()){
 					int random = (int) (Math.random()*12);
 					elemento = Elementos.elemento[random];
-				}else {
+				}else{
 					elemento = grupoElementos.getSelection().getActionCommand();
 				}
 				if(rdbtnClassesAleatorias.isSelected()) {
@@ -415,22 +632,142 @@ public class Tela {
 				}else {
 					classe = grupoClasses.getSelection().getActionCommand();
 				}
-				String rank = Rank.rank[slider.getValue()-1];
 				
-				gerar.getParameters(nivel, elemento, classe, rank);
+				if(rdbtnRankAleatorio.isSelected()) {
+					int random = (int) (Math.random()*5);
+					rank = Rank.rank[random];
+				}else {
+					rank = Rank.rank[slider.getValue()-1];					
+				}
 				
+				try {
+					magiaGerada = gerar.getParameters(nivel, elemento, classe, rank);
+					
+					lblNomeMagia.setText(magiaGerada.getNome());
+					lblRankMagia.setText(magiaGerada.getNomeRank());
+					lblRankDescricao.setText(magiaGerada.getRank());
+					lblClasseMagia.setText(magiaGerada.getClasse());
+					lblElementoMagia.setText(magiaGerada.getElemento());
+					lblEfeitoMagia.setText(magiaGerada.getEfeito());
+					lblAlcanceMagia.setText(magiaGerada.getAlcance());
+					lblDuracaoMagia.setText(magiaGerada.getDuracao());
+					lblNivelMagia.setText(Integer.toString(magiaGerada.getNivel()));
+					
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		
-		btnAjuda.addMouseListener(new MouseAdapter() {
+		btnNovoTipo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				JOptionPane.showMessageDialog(null, "Nível da Magia: Uma magia pode ter um nível entre 1 a 9\n"
-						+ "Elemento da magia: Determina qual vai ser o elemento da magia gerada\n"
-						+ "Classe da Magia: Determina a classe e o comportamento geral da magia gerada\n"
-						+ "Rank de Magia: Determina a qualidade e o poder geral da magia\n\n"
-						+ "Uma magia é gerada de forma semi-aleatória, com base nos parâmetros selecionados"
-						, "Ajuda", 1);
+				try {
+					magiaGerada.setTipo(gerar.gerarNome(magiaGerada.getClasse()));
+					lblNomeMagia.setText(magiaGerada.getNome());
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		
+		btnNovoNomeElemento.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					magiaGerada.setNomeElemento(gerar.gerarNomeElemento(magiaGerada.getElemento()));
+					lblNomeMagia.setText(magiaGerada.getNome());
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
+			}
+		});
+		
+		btnNewButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					magiaGerada.setRank(gerar.gerarRank(magiaGerada.getNomeRank()));
+					lblRankDescricao.setText(magiaGerada.getRank());
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
+			}
+		});
+		
+		btnNovoAlcance.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					magiaGerada.setAlcance(gerar.gerarAlcance());
+					lblAlcanceMagia.setText(magiaGerada.getAlcance());
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		
+		btnNovaDuracao.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					magiaGerada.setDuracao(gerar.gerarDuracao(magiaGerada.getNivel(), magiaGerada.getNomeRank()));
+					lblDuracaoMagia.setText(magiaGerada.getDuracao());
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
+			}
+		});
+		
+		btnNovoEfeito.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				magiaGerada.setEfeito(gerar.gerarEfeito(magiaGerada.getNivel(), magiaGerada.getNomeRank(), magiaGerada.getEfeitoClasse()));
+				lblEfeitoMagia.setText(magiaGerada.getEfeito());
+			}
+		});
+		
+		btnSalvarMagia.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				boolean sucesso = false;
+				magiaGerada.setDescricao(txtrDescricaoMagia.getText());
+				JFileChooser salvar = new JFileChooser();
+				salvar.setCurrentDirectory(null);
+				int escolha = salvar.showSaveDialog(null);
+				if(escolha == JFileChooser.APPROVE_OPTION) {
+					File novaMagia = new File(salvar.getSelectedFile().getAbsolutePath());
+					String[] linha = magiaGerada.salvarTexto().split("\n");
+					
+					FileWriter escrita;
+					try {
+						escrita = new FileWriter(novaMagia);
+						PrintWriter print = new PrintWriter(escrita);
+						int tamanhoLinha = linha.length;
+						for(int i=0;i<tamanhoLinha;i++) {
+							if(i==tamanhoLinha-1) {
+								print.write(linha[i]);
+								print.flush();
+							}else {
+								print.write(linha[i]+"\n");
+								print.flush();
+							}
+						}
+						print.close();
+						
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}finally {
+						sucesso = true;
+					}
+				}
+				if(sucesso) {
+					JOptionPane.showMessageDialog(null, "Magia salva.", "Salvar", 1);
+				}
 			}
 		});
 		
