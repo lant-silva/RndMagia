@@ -185,7 +185,7 @@ public class GerarMagia {
 			if(auxAtaque>6) {
 				dados = "6";
 			}
-			if(dados=="0") {
+			if(auxAtaque==0) {
 				dados = "1";
 			}
 			nomeEfeito = dados+"d"+principal+" de Dano"; 
@@ -198,7 +198,7 @@ public class GerarMagia {
 			if(auxConjuracao>8) {
 				dados = "8";
 			}
-			if(dados=="0") {
+			if(auxConjuracao==0) {
 				dados = "1";
 			}
 			nomeEfeito = dados+"d"+principal+" de Dano";
@@ -211,7 +211,7 @@ public class GerarMagia {
 			if(auxDefesa>5) {
 				dados = "5";
 			}
-			if(dados=="0") {
+			if(auxDefesa==0) {
 				dados = "1";
 			}
 			nomeEfeito = dados+"d"+principal+" de Proteção";
@@ -224,7 +224,7 @@ public class GerarMagia {
 			if(auxInibicao>3) {
 				dados = "3";
 			}
-			if(dados=="0") {
+			if(auxInibicao==0) {
 				dados = "1";
 			}
 			nomeEfeito = dados+"d"+principal+" de Duração";
@@ -240,7 +240,7 @@ public class GerarMagia {
 			if(auxRestauracao>8) {
 				dados = "8";
 			}
-			if(dados=="0") {
+			if(auxRestauracao==0) {
 				dados = "1";
 			}
 			nomeEfeito = dados+"d"+principal+" de Restauração";
@@ -253,7 +253,7 @@ public class GerarMagia {
 			if(auxBonificacao>6) {
 				dados = "6";
 			}
-			if(dados=="0") {
+			if(auxBonificacao==0) {
 				dados = "1";
 			}
 			nomeEfeito = dados+"d"+principal+" de Reforço";
