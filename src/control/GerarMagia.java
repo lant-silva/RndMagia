@@ -185,6 +185,9 @@ public class GerarMagia {
 			if(auxAtaque>6) {
 				dados = "6";
 			}
+			if(dados=="0") {
+				dados = "1";
+			}
 			nomeEfeito = dados+"d"+principal+" de Dano"; 
 			break;
 			
@@ -194,6 +197,9 @@ public class GerarMagia {
 			int auxConjuracao = Integer.parseInt(dados);
 			if(auxConjuracao>8) {
 				dados = "8";
+			}
+			if(dados=="0") {
+				dados = "1";
 			}
 			nomeEfeito = dados+"d"+principal+" de Dano";
 			break;
@@ -205,6 +211,9 @@ public class GerarMagia {
 			if(auxDefesa>5) {
 				dados = "5";
 			}
+			if(dados=="0") {
+				dados = "1";
+			}
 			nomeEfeito = dados+"d"+principal+" de Proteção";
 			break;
 			
@@ -215,6 +224,9 @@ public class GerarMagia {
 			if(auxInibicao>3) {
 				dados = "3";
 			}
+			if(dados=="0") {
+				dados = "1";
+			}
 			nomeEfeito = dados+"d"+principal+" de Duração";
 			break;
 			
@@ -222,11 +234,13 @@ public class GerarMagia {
 			if(formula<1) {
 				formula = 1;
 			}
-			principal = Integer.toString(formula);
 			dados = Integer.toString((int)(Math.random()*nivel)+2);
 			int auxRestauracao = Integer.parseInt(dados);
 			if(auxRestauracao>8) {
 				dados = "8";
+			}
+			if(dados=="0") {
+				dados = "1";
 			}
 			nomeEfeito = dados+"d"+principal+" de Restauração";
 			break;
@@ -237,6 +251,9 @@ public class GerarMagia {
 			int auxBonificacao = Integer.parseInt(dados);
 			if(auxBonificacao>6) {
 				dados = "6";
+			}
+			if(dados=="0") {
+				dados = "1";
 			}
 			nomeEfeito = dados+"d"+principal+" de Reforço";
 			break;
